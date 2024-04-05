@@ -13,7 +13,7 @@ const createComponentTemplate = (project, componentName, callBack) => {
 
 const ${componentName} = () => {
     return (
-        <View style={styles.screen}>
+        <View style={styles.container}>
             <Text>${componentName}</Text>
         </View>
     );
@@ -22,8 +22,10 @@ const ${componentName} = () => {
 export default ${componentName};
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
+    container: {
+        width: 30,
+        height: 30,
+        backgroundColor: "red",
     },
 });`;
 
@@ -41,14 +43,14 @@ const styles = StyleSheet.create({
       fs.mkdirSync(directoryPath);
     }
     fs.writeFileSync(componentPath, template);
+    fs.writeFileSync(indexPath, indexTemplate);
     if (indexPatterned) {
-      fs.writeFileSync(indexPath, indexTemplate);
+      addExportStatement(
+        `${path}/index.${indexFileExtension}`,
+        newExportStatement,
+        callBack
+      );
     }
-    addExportStatement(
-      `${path}/index.${indexFileExtension}`,
-      newExportStatement,
-      callBack
-    );
   }
 };
 

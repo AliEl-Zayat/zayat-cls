@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
       fs.mkdirSync(directoryPath);
     }
     fs.writeFileSync(screenPath, template);
+    fs.writeFileSync(indexPath, indexTemplate);
     if (indexPatterned) {
-      fs.writeFileSync(indexPath, indexTemplate);
+      addExportStatement(
+        `${path}/index.${indexFileExtension}`,
+        newExportStatement,
+        callBack
+      );
     }
-    addExportStatement(
-      `${path}/index.${indexFileExtension}`,
-      newExportStatement,
-      callBack
-    );
   }
 };
 
