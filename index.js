@@ -8,6 +8,7 @@ const createComponentTemplate = require("./templates/ReactNativeComponentTemplat
 const { listProjects } = require("./utils/helpers");
 const createWebComponentTemplate = require("./templates/ReactJsComponentTemplate");
 const createPageTemplate = require("./templates/ReactJsPageTemplate");
+const createNextJsPageTemplate = require("./templates/NextJsPageTemplate");
 
 const configFilePath = "config.js";
 
@@ -51,6 +52,7 @@ function landing(config) {
     }
     const isTS = readlineSync.keyInYNStrict("Using TypeScript? ");
     const isReactNative = readlineSync.keyInYNStrict("Using React native? ");
+    const isNextJs = readlineSync.keyInYNStrict("Using Next.js? ");
     const screensPath = readlineSync.question(
       `Enter the path to the ${isReactNative ? "Screens" : "Pages"} folder: `
     );
@@ -64,6 +66,7 @@ function landing(config) {
       screensPath: path.normalize(screensPath),
       isTS,
       isReactNative,
+      isNextJs,
       indexPatterned,
     };
     saveConfig(config);
@@ -72,6 +75,7 @@ function landing(config) {
       screensPath: path.normalize(screensPath),
       isTS,
       isReactNative,
+      isNextJs,
       indexPatterned,
     };
   } else {
@@ -115,6 +119,10 @@ const screenSelectedFN = (project) => {
   if (screenName.length > 2) {
     if (project.isReactNative) {
       createScreenTemplate(project, screenName, () => mainTerminal(project));
+    } else if (project.isNextJs) {
+      createNextJsPageTemplate(project, screenName, () =>
+        mainTerminal(project)
+      );
     } else {
       createPageTemplate(project, screenName, () => mainTerminal(project));
     }

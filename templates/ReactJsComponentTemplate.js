@@ -9,7 +9,9 @@ const createWebComponentTemplate = (project, componentName, callBack) => {
   const indexFileExtension = isTS ? "ts" : "js";
   const fileExtension = isTS ? "tsx" : "jsx";
 
-  const template = `import React from 'react'
+  const template = `import React from 'react';
+import styles from './styles.module.scss';
+const {} = styles;
 
   const ${componentName} = () => {
     return (
@@ -24,6 +26,7 @@ const createWebComponentTemplate = (project, componentName, callBack) => {
 
   const directoryPath = `${path}/${componentName}`;
   const componentPath = `${directoryPath}/${componentName}.${fileExtension}`;
+  const stylesPath = `${directoryPath}/styles.module.scss`;
   const indexPath = `${directoryPath}/index.${indexFileExtension}`;
 
   if (fs.existsSync(directoryPath)) {
@@ -33,6 +36,7 @@ const createWebComponentTemplate = (project, componentName, callBack) => {
       fs.mkdirSync(directoryPath);
     }
     fs.writeFileSync(componentPath, template);
+    fs.writeFileSync(stylesPath, "");
     fs.writeFileSync(indexPath, indexTemplate);
     if (indexPatterned) {
       addExportStatement(
