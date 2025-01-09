@@ -11,13 +11,13 @@ const createPageTemplate = (project, screenName, callBack) => {
 
   const template = `import React from 'react'
 
-  const ${screenName} = () => {
-    return (
-      <div>${screenName}</div>
-    )
-  }
-  
-  export default ${screenName}`;
+const ${screenName} = () => {
+  return (
+    <div>${screenName}</div>
+  )
+}
+
+export default ${screenName}`;
 
   const indexTemplate = `export { default } from "./${screenName}";`;
   const newExportStatement = `export { default as ${screenName} } from "./${screenName}";`;

@@ -9,17 +9,22 @@ const createWebComponentTemplate = (project, componentName, callBack) => {
   const indexFileExtension = isTS ? "ts" : "js";
   const fileExtension = isTS ? "tsx" : "jsx";
 
+  const typeDeclaration = isTS ? `type T${componentName}Props = {}` : "";
+  const typedProps = isTS ? `props: T${componentName}Props` : "";
+
   const template = `import React from 'react';
 import styles from './styles.module.scss';
 const {} = styles;
 
-  const ${componentName} = () => {
-    return (
-      <div>${componentName}</div>
-    )
-  }
-  
-  export default ${componentName}`;
+${typeDeclaration}
+
+const ${componentName} = (${typedProps}) => {
+  return (
+    <div>${componentName}</div>
+  )
+}
+
+export default ${componentName}`;
 
   const indexTemplate = `export { default } from "./${componentName}";`;
   const newExportStatement = `export { default as ${componentName} } from "./${componentName}";`;

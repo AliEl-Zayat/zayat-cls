@@ -6,17 +6,27 @@ const createNextJsPageTemplate = (project, screenName, callBack) => {
 
   const fileExtension = isTS ? "tsx" : "jsx";
 
+  const typeDeclaration = isTS
+    ? `type TPageProps = {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}`
+    : "";
+  const typedProps = isTS ? `{params, searchParams}: TPageProps` : "";
+
   const template = `import React from 'react'
 import styles from './styles.module.scss';
 const {} = styles;
 
-  const Page = () => {
-    return (
-      <div>${screenName}</div>
-    )
-  }
-  
-  export default Page`;
+${typeDeclaration}
+
+const Page = (${typedProps}) => {
+  return (
+    <div>${screenName}</div>
+  )
+}
+
+export default Page`;
 
   const directoryPath = `${path}/${screenName}`;
   const screenPath = `${directoryPath}/page.${fileExtension}`;
