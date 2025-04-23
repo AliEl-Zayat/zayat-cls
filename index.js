@@ -51,8 +51,26 @@ function landing(config) {
       return;
     }
     const isTS = readlineSync.keyInYNStrict("Using TypeScript? ");
-    const isReactNative = readlineSync.keyInYNStrict("Using React native? ");
-    const isNextJs = readlineSync.keyInYNStrict("Using Next.js? ");
+
+    // Project type selection - React Native and Next.js are mutually exclusive
+    logger.warning("Select project type:");
+    const projectTypeOptions = [
+      "React Native",
+      "Next.js",
+      "React.js (standard)",
+    ];
+    const projectTypeIndex = readlineSync.keyInSelect(
+      projectTypeOptions,
+      "Choose project type"
+    );
+
+    if (projectTypeIndex === -1) {
+      logger.error("Exiting ...");
+      return;
+    }
+
+    const isReactNative = projectTypeIndex === 0;
+    const isNextJs = projectTypeIndex === 1;
     const screensPath = readlineSync.question(
       `Enter the path to the ${isReactNative ? "Screens" : "Pages"} folder: `
     );
